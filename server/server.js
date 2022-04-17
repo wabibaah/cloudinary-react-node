@@ -9,14 +9,19 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
 app.get('/api/images', async (req, res) => {
-    const { resources } = await cloudinary.search
-        .expression('folder:dev_setups')
-        .sort_by('public_id', 'desc')
-        .max_results(30)
-        .execute();
+    try{
 
-    const publicIds = resources.map((file) => file.public_id);
-    res.send(publicIds);
+        const { resources } = await cloudinary.search
+            .expression('folder:dev_setups')
+            .sort_by('public_id', 'desc')
+            .max_results(30)
+            .execute();
+    
+        const publicIds = resources.map((file) => file.public_id);
+        res.send(publicIds);
+    }catch(error){
+        res.status(500).json({error: "Something went wrong"})
+    }
 });
 app.post('/api/upload', async (req, res) => {
     try {

@@ -4,7 +4,7 @@ import Alert from '../components/Alert';
 export default function Upload() {
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState('');
-    const [selectedFile, setSelectedFile] = useState();
+    const [selectedFile, setSelectedFile] = useState(null);
     const [successMsg, setSuccessMsg] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const handleFileInputChange = (e) => {
@@ -45,6 +45,7 @@ export default function Upload() {
             });
             setFileInputState('');
             setPreviewSource('');
+            setSelectedFile(null)
             setSuccessMsg('Image uploaded successfully');
         } catch (err) {
             console.error(err);
